@@ -1,6 +1,7 @@
 package com.bootcamp.polynomial;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class Polynomial {
@@ -59,4 +60,20 @@ public class Polynomial {
     public List<Integer> getValue() {
     		return poly;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < this.poly.size(); i++) {
+            int val = this.poly.get(i);
+            if (val < 0) {
+                sb.append(" " + val + "x^" + i);
+            } else if (val > 0) {
+                sb.append(" + " + val + "x^" + i);
+            }
+        }
+        return sb.toString();
+    }
+
+
 }
