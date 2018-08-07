@@ -1,15 +1,15 @@
 package com.bootcamp.polynomial;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Polynomial {
 
-    private Map<Integer,Integer> poly = new HashMap<>();
+    private List<Integer> poly;
 
     public Polynomial(String s){
+    		this.poly = this.getEmptyList();
+    	
         List<String> arrStr = Arrays.asList(normalizeString(s)
         										.split("\\+"));
         for (String smallPoly : arrStr) {
@@ -19,7 +19,7 @@ public class Polynomial {
         }
     }
     
-    public Polynomial(Map<Integer, Integer> poly) {
+    public Polynomial(List<Integer> poly) {
 		super();
 		this.poly = poly;
 	}
@@ -28,7 +28,7 @@ public class Polynomial {
         List<String> smallPolySplit = Arrays.asList(s.split("y"));
         int key = this.getPower(smallPolySplit);        
         int value = this.getCoef(smallPolySplit);
-        poly.put(key,value);
+        poly.set(key,value);
     }
     
     private String normalizeString (String s) {
@@ -50,7 +50,13 @@ public class Polynomial {
     		}
     }
     
-    public Map<Integer, Integer> getValue() {
+    private List<Integer> getEmptyList() {
+    		Integer[] n = new Integer[100];
+    		Arrays.fill(n, 0);
+    		return Arrays.asList(n);
+    }
+    
+    public List<Integer> getValue() {
     		return poly;
     }
 }
