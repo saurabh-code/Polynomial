@@ -1,47 +1,56 @@
 package com.bootcamp.polynomial;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Polynomial {
 
-    HashMap<Integer,Integer> Poly = new HashMap<>();
-
-    public void addToPoly(String s){
-        String temp = new String();
-        temp = s;
-        String [] arrStr = temp.split("y");
-        int size = arrStr.length;
-        int key,value;
-        if (size > 1) {
-            key = Integer.parseInt(arrStr[1]);
-            value = Integer.parseInt(arrStr[0]);
-        }
-        else{
-            key = 0;
-            value = Integer.parseInt(arrStr[0]);
-
-        }
-        Poly.put(key,value);
-    }
-
-    public void PrintHashMap(){
-        System.out.print(Poly);
-    }
+    private Map<Integer,Integer> poly = new HashMap<>();
 
     public Polynomial(String s){
-        String temp = new String();
-        temp = s;
-        temp = temp.replace("-","+-");
-        temp = temp.replace("x^","y").replace("x","y1");
-        System.out.println(temp);
-        String [] arrStr = temp.split("\\+");
-        for ( String str : arrStr) {
-            addToPoly(str);
+        List<String> arrStr = Arrays.asList(normalizeString(s)
+        										.split("\\+"));
+        for (String smallPoly : arrStr) {
+        		if (!smallPoly.isEmpty()) {
+        			addToPoly(smallPoly);
+        		}
         }
     }
+    
+    public Polynomial(Map<Integer, Integer> poly) {
+		super();
+		this.poly = poly;
+	}
 
-    public static void main(String[] args){
-        Polynomial a1 = new Polynomial("3x+4x^2-2");
-        a1.PrintHashMap();
+	public void addToPoly(String s){
+        List<String> smallPolySplit = Arrays.asList(s.split("y"));
+        int key = this.getPower(smallPolySplit);        
+        int value = this.getCoef(smallPolySplit);
+        poly.put(key,value);
+    }
+    
+    private String normalizeString (String s) {
+    		return s.replaceAll("\\s", "")
+		    		 .replaceAll("-", "+-")
+		    		 .replaceAll("x\\^", "y")
+		    		 .replaceAll("x", "y1");
+    }
+    
+    private Integer getCoef(List<String> s) {
+    		return Integer.parseInt(s.get(0));
+    }
+    
+    private Integer getPower(List<String> s) {
+    		if (s.size() > 1) {
+    			return Integer.parseInt(s.get(1));
+    		} else {
+    			return 0;
+    		}
+    }
+    
+    public Map<Integer, Integer> getValue() {
+    		return poly;
     }
 }
